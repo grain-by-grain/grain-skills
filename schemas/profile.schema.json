@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grainbygrain.xyz/schemas/profile.schema.json",
+  "title": "Grain acceptance profile (GradePlan)",
+  "description": "Composes an acceptance bar from public predicates. Threshold VALUES are buyer-private; only their shape is described here.",
+  "type": "object",
+  "required": ["profileId", "mode", "entries"],
+  "properties": {
+    "profileId": { "type": "string", "examples": ["game-ready-prop@1"] },
+    "mode": { "enum": ["all", "weighted"], "description": "'all' = every predicate must pass; 'weighted' = score >= minScore" },
+    "minScore": { "type": "number", "minimum": 0, "maximum": 1, "description": "weighted mode gate" },
+    "format": { "type": "string", "examples": ["glb"], "description": "required container format" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "threshold"],
+        "properties": {
+          "id": {
+            "enum": ["tri_count", "manifold", "valid_glb", "named_params", "file_size", "uv_present", "texture_size", "dimensions"],
+            "description": "must exist in the predicate registry"
+          },
+          "threshold": { "type": "object", "description": "per-buyer values (PRIVATE); shape varies per predicate" },
+          "weight": { "type": "number", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

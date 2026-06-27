@@ -1,0 +1,51 @@
+{
+  "_mirror": {
+    "note": "Open reference mirror of a recipe authored + validated on the Minds platform by Grain.Game. The CANONICAL source of truth is the Minds artifact below; this copy conforms to ../schemas/recipe-template.schema.json and carries the verbatim, hash-committed provenance. ARTIFACT_ValidateJSON(recipe, schema) returned {\"valid\": true} end-to-end against this repo's schema ($id https://grainbygrain.xyz/schemas/recipe-template.schema.json). Node/edge labels here are a faithful restatement of the authored 6-node/5-edge topology; the aggregates + snapshot_hash are byte-exact so the verified-original claim is reproducible.",
+    "artifacts": {
+      "recipe": "B363583E-F36B-1410-8464-00039CE7DF11",
+      "schema": "AC63583E-F36B-1410-8464-00039CE7DF11",
+      "skill_wrapper": "9B64583E-F36B-1410-8464-00039CE7DF11",
+      "listed_skill": "A264583E-F36B-1410-8464-00039CE7DF11"
+    },
+    "status": "PLACEHOLDER EXAMPLE — distinct_asset_count is 2, below the promote-to-tenet gate (>=3 distinct, >=0.8 pass_rate, count>=3). The companion replaces the PLACEHOLDER digests + verifying_companion with real values once a 3+-distinct session is graded."
+  },
+  "recipe_id": "recipe.blender-character-export-v1",
+  "title": "Blender Character Export Recipe (verified)",
+  "description": "Verified workflow recipe for exporting a stylized Blender character with PBR materials. 6 nodes, 5 edges, with provenance carrying a verified-original claim (snapshot_hash over the aggregates block) under grading profile P_stylized_character_v1 on asset_kind stylized_character. Forks default to unverified-fork-unverified until re-validated.",
+  "asset_kind": "stylized_character",
+  "nodes": [
+    { "id": "sculpt", "stage": "sculpt", "tool": "blender", "label": "Sculpt high-poly form" },
+    { "id": "retopo", "stage": "retopo", "tool": "blender", "label": "Retopologize to game budget",
+      "gate": { "grading_profile": "P_stylized_character_v1", "predicates": ["tri_count"], "predicate_digest": "PLACEHOLDER-tri-count" } },
+    { "id": "uv", "stage": "uv", "tool": "blender", "label": "UV unwrap",
+      "gate": { "grading_profile": "P_stylized_character_v1", "predicates": ["uv_present"], "predicate_digest": "PLACEHOLDER-uv-present" } },
+    { "id": "texture", "stage": "texture", "tool": "blender", "label": "Paint PBR materials" },
+    { "id": "rig", "stage": "rig", "tool": "blender", "label": "Rig + skin weights" },
+    { "id": "export", "stage": "export", "tool": "blender", "label": "Export game-ready asset",
+      "gate": { "grading_profile": "P_stylized_character_v1", "predicates": ["valid_glb", "texture_size", "file_size"], "predicate_digest": "PLACEHOLDER-export" } }
+  ],
+  "edges": [
+    { "from": "sculpt", "to": "retopo", "artifact": "mesh" },
+    { "from": "retopo", "to": "uv", "artifact": "uv_layout" },
+    { "from": "uv", "to": "texture", "artifact": "textured_mesh" },
+    { "from": "texture", "to": "rig", "artifact": "rigged_mesh" },
+    { "from": "rig", "to": "export", "artifact": "fbx" }
+  ],
+  "provenance": {
+    "verifying_mind": "Grain.Game (6498553E-F36B-1410-8464-00039CE7DF11)",
+    "verifying_companion": "PLACEHOLDER-companion-id",
+    "verification_snapshot": {
+      "as_of": "2026-06-27T00:00:00Z",
+      "schema_version": 1,
+      "digest_refs": ["PLACEHOLDER-digest-ref"],
+      "aggregates": { "count": 4, "distinct_asset_count": 2, "pass_rate": 1.0, "repeat_count_so_far": 4, "failed_actions": [] },
+      "predicate_digests": ["PLACEHOLDER-tri-count", "PLACEHOLDER-uv-present", "PLACEHOLDER-export"],
+      "snapshot_hash": "1cd117295e655039929c4efdf921c22ff783ebe54dad4fc5827b1a7f47fe20ed"
+    },
+    "verified_under": [
+      { "grading_profile": "P_stylized_character_v1", "asset_kind": "stylized_character" }
+    ]
+  },
+  "forked_from": null,
+  "drift_status": "verified-original"
+}

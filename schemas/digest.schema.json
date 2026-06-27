@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grainbygrain.xyz/schemas/digest.schema.json",
+  "title": "recipe.workflow-digest-v1",
+  "description": "Session-end digest a companion emits and a Mind promotes to a durable recipe. Only derived events are included — never raw capture.",
+  "type": "object",
+  "required": ["schema_version", "events", "aggregates"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "session_id": { "type": "string" },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["recipe_shape_id", "asset_kind", "grading_profile", "pass"],
+        "properties": {
+          "recipe_shape_id": { "type": "string", "description": "the workflow shape, e.g. 'blender-character-export'" },
+          "asset_kind": { "type": "string", "examples": ["character", "prop", "environment"] },
+          "grading_profile": { "type": "string" },
+          "pass": { "type": "boolean" },
+          "predicate_digest": { "type": "string", "description": "carries the verdict provenance into the recipe" },
+          "tool": { "type": "string", "examples": ["blender", "cascadeur", "substance"] },
+          "stage": { "type": "string", "examples": ["retopo", "uv", "bake", "rig", "export"] },
+          "at": { "type": "integer", "description": "unix seconds" }
+        }
+      }
+    },
+    "aggregates": {
+      "type": "object",
+      "description": "keyed by 'recipe_shape_id|grading_profile|asset_kind'; stabilization pre-computed",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "count": { "type": "integer" },
+          "pass_count": { "type": "integer" },
+          "pass_rate": { "type": "number" },
+          "distinct_asset_count": { "type": "integer" },
+          "stable": { "type": "boolean", "description": "3+ identical PASS on the triple" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grainbygrain.xyz/schemas/recipe-template.schema.json",
+  "title": "recipe.workflow-template-v1",
+  "description": "A verified workflow promoted from a digest, published as a shareable/forkable template. Source of truth is an immutable artifact; a listed Skill is the discoverable wrapper. The verified claim is bound to an immutable snapshot and dies at the first fork.",
+  "type": "object",
+  "required": ["recipe_id", "title", "nodes", "edges", "provenance", "drift_status", "forked_from"],
+  "properties": {
+    "recipe_id": { "type": "string", "examples": ["recipe.blender-character-export-v1"] },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "asset_kind": { "type": "string", "examples": ["character", "prop", "environment"] },
+    "nodes": {
+      "type": "array",
+      "description": "pipeline stages as nodes; a node marks WHAT was verified/required, never how to generate",
+      "items": {
+        "type": "object",
+        "required": ["id", "stage"],
+        "properties": {
+          "id": { "type": "string" },
+          "stage": { "type": "string", "examples": ["concept", "gen", "sculpt", "retopo", "uv", "bake", "texture", "rig", "export"] },
+          "tool": { "type": "string", "examples": ["blender", "tripo", "meshy", "cascadeur", "substance"] },
+          "label": { "type": "string" },
+          "gate": {
+            "type": "object",
+            "description": "the Grain check that passed at this node (if any)",
+            "properties": {
+              "grading_profile": { "type": "string" },
+              "predicates": { "type": "array", "items": { "type": "string" } },
+              "predicate_digest": { "type": "string" }
+            }
+          },
+          "params": { "type": "object", "description": "stage params; public SHAPE, private values redactable" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "artifact": { "type": "string", "examples": ["mesh", "uv", "texture", "rig", "glb"] }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["verifying_mind", "verification_snapshot", "verified_under"],
+      "properties": {
+        "verifying_mind": { "type": "string" },
+        "verifying_companion": { "type": "string" },
+        "steward_id": { "type": "string" },
+        "verification_snapshot": {
+          "type": "object",
+          "required": ["as_of", "schema_version", "aggregates", "snapshot_hash"],
+          "properties": {
+            "as_of": { "type": "string", "format": "date-time" },
+            "schema_version": { "const": 1 },
+            "digest_refs": { "type": "array", "items": { "type": "string" } },
+            "aggregates": { "type": "object", "description": "immutable copy from the authorizing recipe.workflow-digest-v1" },
+            "predicate_digests": { "type": "array", "items": { "type": "string" } },
+            "snapshot_hash": { "type": "string", "description": "content hash of aggregates — tamper-evidence; if the snapshot is edited post-publish the hash no longer matches and the claim is void" }
+          }
+        },
+        "verified_under": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["grading_profile", "asset_kind"],
+            "properties": {
+              "grading_profile": { "type": "string" },
+              "asset_kind": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "forked_from": { "type": ["string", "null"], "description": "recipe_id of the parent, or null for an original" },
+    "drift_status": {
+      "enum": ["verified-original", "unverified-fork-reproduces", "unverified-fork-fails", "unverified-fork-unverified"],
+      "description": "the verified claim NEVER auto-propagates past the first fork; a fork must re-earn it via the companion's stabilization rule"
+    },
+    "local_modifications": { "type": "array", "items": { "type": "string" }, "description": "declared edits in a fork" }
+  }
+}

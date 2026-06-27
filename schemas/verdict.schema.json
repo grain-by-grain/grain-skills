@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grainbygrain.xyz/schemas/verdict.schema.json",
+  "title": "Grain verdict (GradeReport + signature)",
+  "type": "object",
+  "required": ["pass", "report"],
+  "properties": {
+    "pass": { "type": "boolean" },
+    "report": {
+      "type": "object",
+      "required": ["profileId", "assetHash", "results", "predicateDigest"],
+      "properties": {
+        "profileId": { "type": "string" },
+        "assetHash": { "type": "string", "description": "sha256(GLB bytes), hex" },
+        "mode": { "enum": ["all", "weighted"] },
+        "score": { "type": "number" },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "pass", "actual", "expected"],
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "pass": { "type": "boolean" },
+              "actual": { "description": "measured value" },
+              "expected": { "description": "threshold, rendered human-legible" },
+              "weight": { "type": "number" }
+            }
+          }
+        },
+        "predicateDigest": { "type": "string", "description": "sha256 over the sorted {id,pass,actual,expected,weight} commitment" },
+        "gradedAt": { "type": "integer", "description": "caller-pinned; 0 keeps offline grading deterministic" }
+      }
+    },
+    "verdict": {
+      "type": "object",
+      "properties": {
+        "graderSignature": { "type": "string", "description": "EIP-191 signature over the predicateDigest" }
+      }
+    }
+  }
+}
