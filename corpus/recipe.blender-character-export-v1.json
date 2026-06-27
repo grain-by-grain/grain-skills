@@ -1,28 +1,29 @@
 {
   "_mirror": {
-    "note": "Open reference mirror of a recipe authored + validated on the Minds platform by Grain.Game. The CANONICAL source of truth is the Minds artifact below; this copy conforms to ../schemas/recipe-template.schema.json and carries the verbatim, hash-committed provenance. ARTIFACT_ValidateJSON(recipe, schema) returned {\"valid\": true} end-to-end against this repo's schema ($id https://grainbygrain.xyz/schemas/recipe-template.schema.json). Node/edge labels here are a faithful restatement of the authored 6-node/5-edge topology; the aggregates + snapshot_hash are byte-exact so the verified-original claim is reproducible.",
+    "note": "Open mirror of a recipe authored + validated on the Minds platform by Grain.Game. The CANONICAL source of truth is the Minds artifact below. As of 2026-06-27 this is a REAL verified claim (no longer a placeholder): the three predicate digests + aggregates come from 3 real Blender character exports graded live by the Grain grader, distinct_asset_count=3 meets the promote-to-tenet gate, and the recipe is promoted to a Mind tenet. Conforms to ../schemas/recipe-template.schema.json; ARTIFACT_ValidateJSON(recipe, schema) returns valid:true.",
     "artifacts": {
       "recipe": "B363583E-F36B-1410-8464-00039CE7DF11",
       "schema": "AC63583E-F36B-1410-8464-00039CE7DF11",
       "skill_wrapper": "9B64583E-F36B-1410-8464-00039CE7DF11",
       "listed_skill": "A264583E-F36B-1410-8464-00039CE7DF11"
     },
-    "status": "PLACEHOLDER EXAMPLE — distinct_asset_count is 2, below the promote-to-tenet gate (>=3 distinct, >=0.8 pass_rate, count>=3). The companion replaces the PLACEHOLDER digests + verifying_companion with real values once a 3+-distinct session is graded."
+    "tenet": "recipe.blender-character-export.sample-game-prop@1.character (bucket: lesson, salience: high)",
+    "open_followups": "verifying_companion + digest_refs do not affect snapshot_hash (it commits to the aggregates block only) — they are filled in as the companion self-identifies and emits its first real digest payload."
   },
   "recipe_id": "recipe.blender-character-export-v1",
   "title": "Blender Character Export Recipe (verified)",
-  "description": "Verified workflow recipe for exporting a stylized Blender character with PBR materials. 6 nodes, 5 edges, with provenance carrying a verified-original claim (snapshot_hash over the aggregates block) under grading profile P_stylized_character_v1 on asset_kind stylized_character. Forks default to unverified-fork-unverified until re-validated.",
-  "asset_kind": "stylized_character",
+  "description": "Verified workflow recipe for exporting a stylized Blender character with PBR materials. 6 nodes, 5 edges, with provenance carrying a verified-original claim (snapshot_hash over the aggregates block) under grading profile sample-game-prop@1 on asset_kind character. Forks default to unverified-fork-unverified until re-validated.",
+  "asset_kind": "character",
   "nodes": [
     { "id": "sculpt", "stage": "sculpt", "tool": "blender", "label": "Sculpt high-poly form" },
     { "id": "retopo", "stage": "retopo", "tool": "blender", "label": "Retopologize to game budget",
-      "gate": { "grading_profile": "P_stylized_character_v1", "predicates": ["tri_count"], "predicate_digest": "PLACEHOLDER-tri-count" } },
+      "gate": { "grading_profile": "sample-game-prop@1", "predicates": ["tri_count"], "predicate_digest": "ef98760ebdb4e9a176e293d8a44936bc5ef8aad2a94b5dd8e04fdcc0e38d3249" } },
     { "id": "uv", "stage": "uv", "tool": "blender", "label": "UV unwrap",
-      "gate": { "grading_profile": "P_stylized_character_v1", "predicates": ["uv_present"], "predicate_digest": "PLACEHOLDER-uv-present" } },
+      "gate": { "grading_profile": "sample-game-prop@1", "predicates": ["uv_present"], "predicate_digest": "a2162e603a1479032f8178cf39ceb1967edc5fcdfd6ee1cc2ad975a300eff245" } },
     { "id": "texture", "stage": "texture", "tool": "blender", "label": "Paint PBR materials" },
     { "id": "rig", "stage": "rig", "tool": "blender", "label": "Rig + skin weights" },
     { "id": "export", "stage": "export", "tool": "blender", "label": "Export game-ready asset",
-      "gate": { "grading_profile": "P_stylized_character_v1", "predicates": ["valid_glb", "texture_size", "file_size"], "predicate_digest": "PLACEHOLDER-export" } }
+      "gate": { "grading_profile": "sample-game-prop@1", "predicates": ["valid_glb", "texture_size", "file_size"], "predicate_digest": "c7795eedbfd0dee14c92474851fd4add7b20486bac674428a8ee1c085654cf3c" } }
   ],
   "edges": [
     { "from": "sculpt", "to": "retopo", "artifact": "mesh" },
@@ -33,17 +34,21 @@
   ],
   "provenance": {
     "verifying_mind": "Grain.Game (6498553E-F36B-1410-8464-00039CE7DF11)",
-    "verifying_companion": "PLACEHOLDER-companion-id",
+    "verifying_companion": "xyz.grainbygrain.swarm (Grain desktop companion; per-install instance id TBD)",
     "verification_snapshot": {
-      "as_of": "2026-06-27T00:00:00Z",
+      "as_of": "2026-06-27T13:17:31Z",
       "schema_version": 1,
-      "digest_refs": ["PLACEHOLDER-digest-ref"],
-      "aggregates": { "count": 4, "distinct_asset_count": 2, "pass_rate": 1.0, "repeat_count_so_far": 4, "failed_actions": [] },
-      "predicate_digests": ["PLACEHOLDER-tri-count", "PLACEHOLDER-uv-present", "PLACEHOLDER-export"],
-      "snapshot_hash": "1cd117295e655039929c4efdf921c22ff783ebe54dad4fc5827b1a7f47fe20ed"
+      "digest_refs": ["sess-1782565904655"],
+      "aggregates": { "count": 3, "pass_count": 3, "pass_rate": 1.0, "distinct_asset_count": 3, "repeat_count_so_far": 3, "failed_actions": [], "stable": true },
+      "predicate_digests": [
+        "ef98760ebdb4e9a176e293d8a44936bc5ef8aad2a94b5dd8e04fdcc0e38d3249",
+        "a2162e603a1479032f8178cf39ceb1967edc5fcdfd6ee1cc2ad975a300eff245",
+        "c7795eedbfd0dee14c92474851fd4add7b20486bac674428a8ee1c085654cf3c"
+      ],
+      "snapshot_hash": "48f1afeddcc0644f4536f6241b0bc30d5c8f2c80d61f548c656b1f36b7832c40"
     },
     "verified_under": [
-      { "grading_profile": "P_stylized_character_v1", "asset_kind": "stylized_character" }
+      { "grading_profile": "sample-game-prop@1", "asset_kind": "character" }
     ]
   },
   "forked_from": null,

@@ -35,7 +35,9 @@
           "pass_count": { "type": "integer" },
           "pass_rate": { "type": "number" },
           "distinct_asset_count": { "type": "integer" },
-          "stable": { "type": "boolean", "description": "3+ identical PASS on the triple" }
+          "repeat_count_so_far": { "type": "integer", "description": "times this triple has been seen (the stabilization counter)" },
+          "failed_actions": { "type": "array", "items": { "type": "object" }, "description": "per-failed-event {asset_hash, fail_ids}; empty when all PASS" },
+          "stable": { "type": "boolean", "description": "3+ PASS on the triple (companion-side signal)" }
         }
       }
     }

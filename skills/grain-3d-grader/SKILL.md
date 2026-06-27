@@ -44,8 +44,12 @@ Response:
 
 ## Predicate vocabulary (public)
 
-`tri_count` · `manifold` · `valid_glb` · `named_params` · `file_size` · `uv_present` ·
-`texture_size` · `dimensions` — plus a `format` container gate.
+Geometry / export: `tri_count` · `manifold` · `valid_glb` · `named_params` · `file_size` ·
+`uv_present` · `texture_size` · `dimensions` — plus a `format` container gate.
+
+Rig / animation (for skinned, animation-ready deliverables): `armature_present` · `bone_count` ·
+`weights_normalized` · `has_animation` · `bind_pose_valid` — all deterministic from glTF
+`skins` / `JOINTS_0`+`WEIGHTS_0` / `animations`; vacuous-pass on a static mesh.
 
 Each predicate is a **pure function of the GLB bytes** — no clock, no I/O, no RNG — so a verdict is
 reproducible. The thresholds that select and parametrize predicates come from the (private) profile;

@@ -18,7 +18,7 @@
         "required": ["id", "threshold"],
         "properties": {
           "id": {
-            "enum": ["tri_count", "manifold", "valid_glb", "named_params", "file_size", "uv_present", "texture_size", "dimensions"],
+            "enum": ["tri_count", "manifold", "valid_glb", "named_params", "file_size", "uv_present", "texture_size", "dimensions", "armature_present", "bone_count", "weights_normalized", "has_animation", "bind_pose_valid"],
             "description": "must exist in the predicate registry"
           },
           "threshold": { "type": "object", "description": "per-buyer values (PRIVATE); shape varies per predicate" },
