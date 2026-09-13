@@ -19,7 +19,12 @@ This repo is the **method**, and it is deliberately, fully open:
 - the **profile schema** — how an acceptance bar is composed
 - the **verdict + digest format** — what a grade commits to
 - the **workflow-digest** memory format — how a verified workflow becomes a reusable recipe
-- a public **test corpus** and a reproducible **benchmark**
+- a **reference recipe**, validated end to end against the schema it documents
+
+Not here yet, and named so you don't go looking: the public **test corpus** of passing and failing
+GLBs, and the **benchmark harness** that would let you reproduce a grade end to end. `corpus/` and
+`bench/` hold the shape and the intent; the assets and the harness are not written. The method is
+open and the service is live — the reproducibility kit is the next thing.
 
 The **tuned thresholds** that turn this vocabulary into a specific buyer's acceptance bar are **not**
 here. They live in a private profile store (the `ProfileResolver` seam) and are referenced only by id.
